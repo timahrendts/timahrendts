@@ -1,0 +1,118 @@
+<html>
+<head>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: rgb(38, 50, 56);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 25px;
+}
+
+#portrait
+{
+    width: 500px;
+    height: 660px;
+    display: block;
+    box-shadow: 0 10pt 10pt rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+    border-radius: 5pt;
+    background: rgba(255,255,255,0.75) url(combo.png) center bottom no-repeat;
+    background-size: contain;
+}
+
+.cycle {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+    background: #FFF url(ahrendts.png) center bottom no-repeat;
+    background-size: contain;
+    animation: 5s linear 0s infinite alternate cycle;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 5pt;
+}
+
+.cycle:hover {
+    opacity: 0;
+}
+
+@keyframes cycle {
+    from {
+        background: #FFF url(cook.png) center bottom no-repeat;
+        background-size: contain;
+    }
+    50% {
+        background: #FFF url(combo.png) center bottom no-repeat;
+        background-size: contain;
+    }
+    to {
+        background: #FFF url(ahrendts.png) center bottom no-repeat;
+        background-size: contain;
+    }
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div id="portrait">
+            <div class="cycle"></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var sizer = function(element) {
+        var margin = 50;
+        var originalWidth = document.getElementById("portrait").offsetWidth;
+        var originalHeight = document.getElementById("portrait").offsetHeight;
+        var aspectRatio = originalWidth / originalHeight;
+
+        if (element.width > element.height)
+        {
+            return function()
+            {
+                if (originalWidth > window.innerWidth - margin)
+                {
+                    var width = window.innerWidth - margin;
+                    element.style.width = width;
+                    element.style.height = aspectRatio / width;
+                }
+                else
+                {
+                    element.style.height = null;
+                    element.style.width = null;
+                }
+            }
+        }
+        else
+        {
+            return function()
+            {
+                if (originalHeight > window.innerHeight - margin)
+                {
+                    var height = window.innerHeight - margin;
+                    element.style.height = height;
+                    element.style.width = aspectRatio * height;
+                }
+                else
+                {
+                    element.style.height = null;
+                    element.style.width = null;
+                }
+            }
+        }
+    }
+
+    var fn = sizer(document.getElementById("portrait"));
+
+    window.addEventListener("load", fn);
+    window.addEventListener("resize", fn);
+</script>
+</html>
